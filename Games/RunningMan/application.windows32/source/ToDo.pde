@@ -1,0 +1,11 @@
+/*
+Story mode
+Prefabs
+Decorations
+Block alternative designs
+
+Dialouge box
+Enemies
+Aim and Shoot
+Moving platforms
+*/
