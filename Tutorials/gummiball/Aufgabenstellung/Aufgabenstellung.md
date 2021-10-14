@@ -14,5 +14,5 @@ Tipp: Die aktuelle Position des Mauszeigers lässt sich mit den Variablen **mous
 momentan gehalten wird, lässt sich mit der Variable **mousePressed** feststellen. Schlage Details in der Dokumentation nach.
 
 Tipp 2: Fensterbreite und -höhe sind in **width** und **height** gespeichert.
-←←
+
 Tipp 3: Um Berührung mit Wand oder Boden festzustellen, ist es gut den Radius bzw. Durchmesser des Balls als Variable festzuhalten.
