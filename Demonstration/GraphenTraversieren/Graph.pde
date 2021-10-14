@@ -30,7 +30,7 @@ class Graph {
     int size = todo.size();
     for (int i = 0; i<size; i++) {
       Node cur = todo.get(0);
-      if(visited.contains(cur)) {
+      if (visited.contains(cur)) {
         continue;
       }
       cur.col = color(255, 0, 0);
@@ -63,7 +63,11 @@ class Graph {
     }
     if (count==0) {
       count = 100/speed;
-      bfsRek();
+      if (algorithm.equals("BFS")) {
+        bfsRek();
+      } else if (algorithm.equals("BFS")) {
+        //dfsRek();
+      }
     }
     stroke(0);
     strokeWeight(1);
@@ -93,7 +97,7 @@ class Graph {
     }
     if (nodeA!=null & nodeB!=null) {
       nodeA.connectedTo.add(nodeB);
-      if(bidirectional) {
+      if (bidirectional) {
         nodeB.connectedTo.add(nodeA);
       }
     }
