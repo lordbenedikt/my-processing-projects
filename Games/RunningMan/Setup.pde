@@ -1,5 +1,5 @@
 public void settings() {
-  size(1000, 600, P3D);
+  size(1000, 600/*, P3D*/);
 }
 
 class TestClass {
@@ -11,7 +11,7 @@ class TestClass {
 float hey = 5;
 
 public void setup() {
-  frameRate(100);
+  frameRate(61);
   //setFloatField("hey",11);
   //System.out.println(hey);
   //TestClass test = new TestClass();

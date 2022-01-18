@@ -202,7 +202,7 @@ class SolidRect {
     if (visible) {
       fill(groundColor);
       rect(x1, y1, x2-x1, y2-y1);
-      drawGrass();
+      //drawGrass();
     } else {
       if (state==GM.EDITOR) {
       fill(0, 0);
