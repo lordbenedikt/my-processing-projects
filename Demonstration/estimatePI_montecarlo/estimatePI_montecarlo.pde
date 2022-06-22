@@ -9,7 +9,7 @@ void setup() {
 }
 
 void draw() {
-  for (int i = 0; i<600; i++) {
+  for (int i = 0; i<6; i++) {
     float x = random(0,599);
     float y = random(0,599);
     if(dist(299.5,299.5,x,y)<299.5) {
