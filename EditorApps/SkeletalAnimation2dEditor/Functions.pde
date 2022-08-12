@@ -46,7 +46,7 @@ void editorAction() {
 void select() {
   Bone closestBone = null;
   float shortestDistance = 9999f;
-  for (Bone bone : skeleton.bones) {
+  for (Bone bone : skinnedSkeleton.skeleton.bones) {
     if (action != Action.NONE) return;
     if (keyIsDown(CONTROL)) {
       bone.unselect();
@@ -84,11 +84,8 @@ Bone createBone(Bone parent) {
       new PVector(0, 0),
       angle,
       endOfBone.copy().sub(mousePos).mag());
-    println("global_rot: " + bone.getGlobalRot());
-    println("end: " + parent.getEndOfBone());
-    println("rotation: " + parent.getGlobalRot());
   }
-  skeleton.addBone(bone);
+  skinnedSkeleton.skeleton.addBone(bone);
   selectedBones.clear();
   bone.select();
   return bone;
@@ -114,4 +111,34 @@ float getAngle(PVector vector) {
   } else {
     return PVector.angleBetween(new PVector(0, 1), vector) + PI;
   }
+}
+float getDistanceToSegment( float x1, float y1, float x2, float y2, float x, float y ){
+  PVector result = new PVector(); 
+  
+  float dx = x2 - x1; 
+  float dy = y2 - y1; 
+  float d = sqrt( dx*dx + dy*dy ); 
+  float ca = dx/d; // cosine
+  float sa = dy/d; // sine 
+  
+  float mX = (-x1+x)*ca + (-y1+y)*sa; 
+  
+  if( mX <= 0 ){
+    result.x = x1; 
+    result.y = y1; 
+  }
+  else if( mX >= d ){
+    result.x = x2; 
+    result.y = y2; 
+  }
+  else{
+    result.x = x1 + mX*ca; 
+    result.y = y1 + mX*sa; 
+  }
+  
+  dx = x - result.x; 
+  dy = y - result.y; 
+  result.z = sqrt( dx*dx + dy*dy ); 
+  
+  return result.z;   
 }

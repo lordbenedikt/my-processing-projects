@@ -24,7 +24,7 @@ void mousePressed() {
   dragFrom = new PVector(mouseX, mouseY);
 }
 void mouseDragged() {
-  if (keyIsDown(CONTROL)) {
+  if (keyIsDown(CONTROL) || keyIsDown(ALT)) {
     return;
   }
   if (action == Action.NONE) {
@@ -38,7 +38,7 @@ void mouseReleased() {
     action = Action.NONE;
   } else if (dragSelect) {
     dragSelect = false;
-    for (Bone bone : skeleton.bones) {
+    for (Bone bone : skinnedSkeleton.skeleton.bones) {
       // If SHIFT isn't down unselect all
       if (!keyIsDown(SHIFT)) {
         bone.unselect();
@@ -57,13 +57,16 @@ void mouseReleased() {
         null;
       Bone newBone = createBone(parent);
       // Make only new bone selected
-      for (Bone bone : skeleton.bones) {
+      for (Bone bone : skinnedSkeleton.skeleton.bones) {
         if (bone == newBone) {
           bone.select();
         } else {
           bone.unselect();
         }
       }
+      // If ALT is down create screenPoint
+    } else if (keyIsDown(ALT)) {
+      skinnedSkeleton.screenPositions.add(new PVector(mouseX,mouseY));
     } else {
       select();
     }
@@ -71,6 +74,7 @@ void mouseReleased() {
 }
 
 void setSelectionCenterAnchor() {
+  if (selectedBones.size()==0) return;
   PVector topLeft = selectedBones.get(0).getGlobalPos().copy();
   PVector bottomRight = topLeft.copy();
   for (Bone bone : selectedBones) {
@@ -85,10 +89,9 @@ void setSelectionCenterAnchor() {
 
 void keyPressed() {
   setSelectionCenterAnchor();
-  
+
   //add keys to list of pressed keys
-  if (keyCode==SHIFT) pressedKeys.add(new Integer(SHIFT));
-  if (keyCode==CONTROL) pressedKeys.add(new Integer(CONTROL));
+  pressedKeys.add(new Integer(keyCode));
 
   //move
   if (key=='g') {
@@ -120,19 +123,64 @@ void keyPressed() {
 
   //delete
   if (key=='x') {
-    skeleton.bones.removeAll(selectedBones);
+    skinnedSkeleton.skeleton.bones.removeAll(selectedBones);
     selectedBones.clear();
   }
 
-  //add keyframe
+  // add keyframe
   if (key=='k') {
+    animations.get(selectedAnimation-1).addKeyframe();
+  }
+  
+  // play/stop animation
+  if (key=='p') {
+    isPlaying = !isPlaying;
+  }
+
+  // generate skin
+  if (key=='m') {
+    skinnedSkeleton.generateSkin();
+  }
+
+  // create lines
+  if (key=='l') {
+    if (lines.size()==0) {
+      for (var vertex : skinnedSkeleton.skin.vertexSpritePosMap.keySet()) {
+        var pos1 = vertex.getPositionOnScreen();
+        for (var vertex2 : skinnedSkeleton.skin.vertexSpritePosMap.keySet()) {
+          var pos2 = vertex2.getPositionOnScreen();
+          if (dist(pos1.x, pos1.y, pos2.x, pos2.y) <= 30f) {
+            lines.add(new SkinVertex[] {vertex, vertex2});
+          }
+        }
+      }
+    }
+  }
+  
+  if (key=='0' || key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9') {
+    var number = key - '0';
+    if (number<=animationCount) {
+      selectedAnimation = number;
+    }
+  }
+  
+  // add animation
+  if (key=='n') {
+    if (animationCount<10) {
+      animationCount++;
+      animations.add(new Animation());
+    }
+  }
+  
+  // add animation
+  if (key=='a') {
+    additiveLayering = !additiveLayering;
   }
 }
 
 void keyReleased() {
   //remove keys from list of pressed keys
-  if (keyCode==SHIFT) pressedKeys.remove(new Integer(SHIFT));
-  if (keyCode==CONTROL) pressedKeys.remove(new Integer(CONTROL));
+  if (pressedKeys.contains(new Integer(keyCode))) pressedKeys.remove(new Integer(keyCode));
 }
 
 boolean keyIsDown(int pressedKey) {
