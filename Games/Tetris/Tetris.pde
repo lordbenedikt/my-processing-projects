@@ -85,8 +85,8 @@ final int WHITE = color(255, 255, 255);
 final int GRAY = color(50);
 
 enum Colors {
-  BLACK(0x000000), PURPLE(0x9E17B3), GREEN(0x7cd104), 
-    YELLOW(0xffea00), BLUE(0x007bff), RED(0xff0000), 
+  BLACK(0x000000), PURPLE(0x9E17B3), GREEN(0x7cd104),
+    YELLOW(0xffea00), BLUE(0x007bff), RED(0xff0000),
     ORANGE(0xff7b00), BRIGHT_BLUE(0x87fff1), WHITE(0xffffff);
   private final int value;
 
@@ -124,6 +124,7 @@ int fall = countFall;
 int points = 0;
 int maxLevel = 10;
 boolean gameOver = false;
+boolean usedSwitch = false;
 int[][] grid = new int[20][10];
 float blockWidth = 0;
 float anchorX;
@@ -137,6 +138,7 @@ boolean keyRight = false;
 boolean keyEsc = false;
 boolean keySpace = false;
 boolean keyR = false;
+boolean keyC = false;
 
 void keyPressed() {
   if (keyCode == ESC) keyEsc = true;
@@ -146,6 +148,7 @@ void keyPressed() {
   if (keyCode == RIGHT) keyRight = true;
   if (key == ' ') keySpace = true;
   if (key == 'r') keyR = true;
+  if (key == 'c') keyC = true;
 }
 
 void keyReleased() {
@@ -155,6 +158,7 @@ void keyReleased() {
   if (keyCode == RIGHT) keyRight = false;
   if (key == ' ') keySpace = false;
   if (key == 'r') keyR = true;
+  if (key == 'c') keyC = true;
 }
 
 void settings() {
@@ -194,8 +198,16 @@ void keyAction() {
     }
   }
   if (keySpace) {
-    b1.newBlock();
+    while(!b1.atFloor()) {
+      b1.yPos += 1;
+      fall = countFall;
+    }
+    b1.land();
     keySpace = false;
+  }
+  if (keyC) {
+    b1.switchBlock();
+    keyR = false;
   }
   if (keyR) {
     restart();
@@ -222,6 +234,14 @@ class Block {
   int dir;
   int[][] shape;
 
+  Block(Block block) {
+    this.xPos = block.xPos;
+    this.yPos = block.yPos;
+    this.colour = block.colour;
+    this.dir = block.dir;
+    this.shape = block.shape;
+  }
+
   Block(int colour) {
     this.colour = colour;
     dir = r.nextInt(3);
@@ -234,57 +254,57 @@ class Block {
   void setShape(int colour) {
     if (colour == PURPLE) {
       shape = new int[][]{
-        {0, 0, 1, 0}, 
-        {0, 0, 1, 0}, 
-        {0, 1, 1, 0}, 
+        {0, 0, 1, 0},
+        {0, 0, 1, 0},
+        {0, 1, 1, 0},
         {0, 0, 0, 0}
       };
     }
     if (colour == ORANGE) {
       shape = new int[][]{
-        {0, 0, 0, 0}, 
-        {0, 0, 1, 0}, 
-        {0, 1, 1, 1}, 
+        {0, 0, 0, 0},
+        {0, 0, 1, 0},
+        {0, 1, 1, 1},
         {0, 0, 0, 0}
       };
     }
     if (colour == GREEN) {
       shape = new int[][]{
-        {0, 0, 1, 0}, 
-        {0, 0, 1, 0}, 
-        {0, 0, 1, 0}, 
+        {0, 0, 1, 0},
+        {0, 0, 1, 0},
+        {0, 0, 1, 0},
         {0, 0, 1, 0}
       };
     }
     if (colour == RED) {
       shape = new int[][]{
-        {0, 0, 0, 0}, 
-        {0, 1, 1, 0}, 
-        {0, 1, 1, 0}, 
+        {0, 0, 0, 0},
+        {0, 1, 1, 0},
+        {0, 1, 1, 0},
         {0, 0, 0, 0}
       };
     }
     if (colour == BRIGHT_BLUE) {
       shape = new int[][]{
-        {0, 0, 0, 0}, 
-        {0, 1, 1, 0}, 
-        {0, 0, 1, 1}, 
+        {0, 0, 0, 0},
+        {0, 1, 1, 0},
+        {0, 0, 1, 1},
         {0, 0, 0, 0}
       };
     }
     if (colour == BLUE) {
       shape = new int[][]{
-        {0, 1, 0, 0}, 
-        {0, 1, 0, 0}, 
-        {0, 1, 1, 0}, 
+        {0, 1, 0, 0},
+        {0, 1, 0, 0},
+        {0, 1, 1, 0},
         {0, 0, 0, 0}
       };
     }
     if (colour == YELLOW) {
       shape = new int[][]{
-        {0, 0, 0, 0}, 
-        {0, 1, 1, 0}, 
-        {1, 1, 0, 0}, 
+        {0, 0, 0, 0},
+        {0, 1, 1, 0},
+        {1, 1, 0, 0},
         {0, 0, 0, 0}
       };
     }
@@ -385,8 +405,21 @@ class Block {
         }
       }
     }
+    usedSwitch = false;
     newBlock();
     fullRow();
+  }
+
+  void switchBlock() {
+    if (!usedSwitch) {
+      usedSwitch = true;
+      var currentBlock = new Block(b1);
+      b1.yPos = -4;
+      b1.colour = nextBlock.colour;
+      b1.xPos = 3;
+      b1.shape = nextBlock.shape;
+      nextBlock = currentBlock;
+    }
   }
 
   void newBlock() {
@@ -430,7 +463,7 @@ class Block {
       for (int j = 0; j < 4; j++) {
         if (shape[j][i] == 1)
           if (yPos + j >= 0)
-            drawSquare(anchorX + blockWidth * xPos + blockWidth * i, 
+            drawSquare(anchorX + blockWidth * xPos + blockWidth * i,
               blockWidth + blockWidth * yPos + blockWidth * j);
       }
     }
@@ -464,6 +497,9 @@ class Block {
   }
 
   void drawNext(float x, float y) {
+    fill(WHITE);
+    textSize(blockWidth / 2);
+    text("Press C to switch", x - blockWidth * 0.2f, y - blockWidth * 0.2f - blockWidth, blockWidth * 4.4f);
     fill(BLACK);
     rect(x - blockWidth * 0.2f, y - blockWidth * 0.2f, blockWidth * 4.4f, blockWidth * 4.4f);
     if (nextBlock.colour != GREEN) {
@@ -481,8 +517,8 @@ class Block {
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
         if (nextBlock.shape[j][i] == 1)
-          rect(x + blockWidth * i, 
-            y + blockWidth * j, 
+          rect(x + blockWidth * i,
+            y + blockWidth * j,
             blockWidth, blockWidth);
       }
     }
