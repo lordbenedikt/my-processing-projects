@@ -14,9 +14,9 @@ Sketches that are made to create something else i.e. a drawing or an animation.
 
 This app is a simple painting app. Paintings can be saved as processing code.
 
-[source](EditorApps/Grafikeditor/)
+[source](EditorApps/Grafikeditor)
 
-![painting app screenshot](EditorApps\Grafikeditor\screenshot_00.png)
+![painting app screenshot](EditorApps/Grafikeditor/screenshot_00.png)
 
 ## p5.js
 
@@ -28,7 +28,7 @@ This app, my implementation of the popular game hangman, uses the local storage 
 
 [open app](https://lordbenedikt.github.io/portfolio_siteground/hangman/index.html)
 
-![hangman screenshot](p5js\hangman\screenshot.png)
+![hangman screenshot](p5js/hangman/screenshot.png)
 
 ### AStar Demo
 
@@ -36,7 +36,7 @@ This app demonstrates the A* search algorithm, here used to find the shortest li
 
 [open app](https://lordbenedikt.github.io/portfolio_siteground/astar_demo/index.html)
 
-![astar screenshot](p5js\astar_demo\screenshot.png)
+![astar screenshot](p5js/astar_demo/screenshot.png)
 
 ### Maze Generator
 
@@ -44,4 +44,4 @@ This app generates random mazes. The algorithm starts with an empty rectangular 
 
 [open app](https://lordbenedikt.github.io/portfolio_siteground/maze_generator/index.html)
 
-![maze generator screenshot](p5js\maze_generator\screenshot.png)
+![maze generator screenshot](p5js/maze_generator/screenshot.png)
