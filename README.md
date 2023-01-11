@@ -26,7 +26,7 @@ Sketches that were written in javascript to run inside a browser.
 
 This app, my implementation of the popular game hangman, uses the local storage to save customized word sets. Predefined English and German word sets are available. This is a client side app running independantly from the server.
 
-[open app](https://lordbenedikt.github.io/portfolio_siteground/hangman/index.html)
+[open app](https://lordbenedikt.github.io/portfolio_webapps/hangman/index.html)
 
 ![hangman screenshot](p5js/hangman/screenshot.png)
 
@@ -34,7 +34,7 @@ This app, my implementation of the popular game hangman, uses the local storage 
 
 This app demonstrates the A* search algorithm, here used to find the shortest line on a graph connecting two points.
 
-[open app](https://lordbenedikt.github.io/portfolio_siteground/astar_demo/index.html)
+[open app](https://lordbenedikt.github.io/portfolio_webapps/astar_demo/index.html)
 
 ![astar screenshot](p5js/astar_demo/screenshot.png)
 
@@ -42,6 +42,6 @@ This app demonstrates the A* search algorithm, here used to find the shortest li
 
 This app generates random mazes. The algorithm starts with an empty rectangular room, then separates it with a wall at a random position. This process is repeated for each of the smaller rooms until the desired granularity is reached.
 
-[open app](https://lordbenedikt.github.io/portfolio_siteground/maze_generator/index.html)
+[open app](https://lordbenedikt.github.io/portfolio_webapps/maze_generator/index.html)
 
 ![maze generator screenshot](p5js/maze_generator/screenshot.png)
