@@ -1,17 +1,15 @@
 # Grafikeditor
 
-![Editor Screenshot](screenshot_00.png)
+![Editor Screenshot](img/screenshot_00.png)
 
 ## Funktion
 Dies ist ein Grafikeditor, mit welchem anhand von Formen Bilder
 erstellt werden können. Diese Bilder können in Processing-Code
 umgewandelt werden. Hier ein Beispielbild erstellt mit dem Grafikeditor:
 
-![Codegenerierung Beispiel](screenshot_01.png)
+![Codegenerierung Beispiel](img/screenshot_01.png)
 
 Der generierte Code dazu sieht wie folgt aus:
-
-![Beispielcode](screenshot_02.png)
 
 ```
 fill(252.0, 200.0, 0.0);
@@ -37,7 +35,7 @@ anstatt der linken vertauscht Füll- und Umrandungsfarbe.<br>
 Ein Tool lässt sich per Klick auf die Toolbar auswählen. (Im Beispielbild
 ist aktuell das Kreistool ausgewählt)
 
-![Toolbar](screenshot_toolbar.png)
+![Toolbar](img/screenshot_toolbar.png)
 
 #### Palette
 Per Klick auf die Palette lässt sich die Farbe wechseln. Es wird zwischen Primär- und
@@ -49,7 +47,7 @@ Buckettool den Hintergrund auf die aktuelle Primärfarbe setzen.
 
 #### Liniendicke
 
-![Stroke Weight](screenshot_stroke_weight.png)
+![Stroke Weight](img/screenshot_stroke_weight.png)
 
 Nach Klicken auf das Eingabefeld am oberen Fensterrand wird dieses angewählt. Bei angewähltem
 Eingabefällt lässt sich die gewünschte Linien und Umrandungsdicke per Tasteneingabe festlegen. 

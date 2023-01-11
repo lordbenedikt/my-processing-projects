@@ -14,9 +14,9 @@ Sketches that are made to create something else i.e. a drawing or an animation.
 
 This app is a simple painting app. Paintings can be saved as processing code.
 
-[source](EditorApps/Grafikeditor)
+[source code and readme](EditorApps/Grafikeditor)
 
-![painting app screenshot](EditorApps/Grafikeditor/screenshot_00.png)
+![painting app screenshot](EditorApps/Grafikeditor/img/screenshot_00.png)
 
 ## p5.js
 
